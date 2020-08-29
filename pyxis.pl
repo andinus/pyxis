@@ -50,7 +50,7 @@ my %dispatch = (
             ->new(
                 verify_SSL => 1,
                 # default user-agent string if ending in space.
-                agent => "pyxis: https://andinus.nand.sh/pyxis ",
+                # agent => "pyxis: https://andinus.nand.sh/pyxis ",
             );
 
         foreach my $feed (sort keys %feeds) {
