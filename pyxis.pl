@@ -8,10 +8,12 @@ use Path::Tiny;
 use Getopt::Long;
 use Term::ANSIColor qw/:pushpop/;
 
+my $version = "Pyxis v0.1.0";
+
 my %options;
 GetOptions(
     \%options,
-    qw{ verbose help }
+    qw{ verbose help version }
 ) or die "Error in command line arguments\n";
 
 if ($options{help}) {
@@ -30,6 +32,9 @@ Options:
     --help
         Print this help.";
         exit 0;
+} elsif ($options{version}) {
+    say $version;
+    exit 0;
 }
 
 # $feeds_dir will store user's feeds.
