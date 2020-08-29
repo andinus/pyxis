@@ -46,7 +46,12 @@ my %feeds = get_feeds();
 my %dispatch = (
     fetch => sub {
         require HTTP::Tiny;
-        my $http = HTTP::Tiny->new(verify_SSL => 1);
+        my $http = HTTP::Tiny
+            ->new(
+                verify_SSL => 1,
+                # default user-agent string if ending in space.
+                agent => "pyxis: https://andinus.nand.sh/pyxis ",
+            );
 
         foreach my $feed (sort keys %feeds) {
             my $url = $feeds{$feed};
