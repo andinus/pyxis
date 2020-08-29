@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 my %feeds = (
-    example => "https://example.com/twtxt.txt",
+    andinus => "https://andinus.nand.sh/twtxt",
 );
 
 sub get_feeds { return %feeds; }
