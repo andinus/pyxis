@@ -80,7 +80,7 @@ my %dispatch = (
 
         foreach my $feed (@feeds) {
             # Skip if feed file doesn't exist.
-            say "pyxis: unknown feed `$feed'"
+            warn "pyxis: unknown feed `$feed'\n"
                 and next
                 unless -e $feed;
 
