@@ -29,6 +29,8 @@ Commands:
 Options:
     --verbose
         Verbose operation mode.
+    --version
+        Print Pyxis version.
     --help
         Print this help.";
         exit 0;
