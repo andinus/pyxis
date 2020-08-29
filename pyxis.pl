@@ -68,11 +68,18 @@ my %dispatch = (
 
         # If $ARGV[1] is passed then only load that feed.
         my @feeds;
-        $ARGV[1]
-            ? push @feeds, "$feeds_dir/$ARGV[1]"
+
+        shift @ARGV; # Drop `timeline' from @ARGV.
+
+        # Add all arguments to @feeds, this allows user to run `pyxis
+        # timeline f1 f2' & it'll load both `f1' & `f2'. But user can
+        # also type `pyxis timeline f1 f1' & it'll load `f1' twice.
+        scalar @ARGV
+            ? do {push @feeds, "$feeds_dir/$_" foreach @ARGV}
             : push @feeds, path($feeds_dir)->children;
 
         foreach my $feed (@feeds) {
+            die "pyxis: no such feed\n" unless -e $feed;
             for my $line ($feed->lines) {
                 chomp $line;
                 next if (substr($line, 0, 1) eq "#"
