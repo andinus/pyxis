@@ -60,12 +60,19 @@ my %dispatch = (
             my $res = $http->mirror($url, $file);
             $res->{success}
                 ? do {say "$feed updated" if $options{verbose}}
-                : warn "failed to fetch $feed - $url\n$!\n"
+                : warn "failed to fetch $feed - $url\n$!\n";
         }
     },
     timeline => sub {
         my %twtxt;
-        foreach my $feed (path($feeds_dir)->children) {
+
+        # If $ARGV[1] is passed then only load that feed.
+        my @feeds;
+        $ARGV[1]
+            ? push @feeds, "$feeds_dir/$ARGV[1]"
+            : push @feeds, path($feeds_dir)->children;
+
+        foreach my $feed (@feeds) {
             for my $line ($feed->lines) {
                 chomp $line;
                 next if (substr($line, 0, 1) eq "#"
