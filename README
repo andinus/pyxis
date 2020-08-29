@@ -5,6 +5,14 @@
                                ━━━━━━━━━
 
 
+Table of Contents
+─────────────────
+
+1 Documentation
+.. 1.1 Configuration
+.. 1.2 Commands
+
+
 Pyxis is a simple twtxt client.
 
 [twtxt] is a decentralised, minimalist microblogging service for
@@ -58,3 +66,20 @@ hackers.
 
   Add your feeds to `%feeds' hash like shown above. You can remove those
   2 `use' lines but it's good if you keep them.
+
+
+1.2 Commands
+────────────
+
+1.2.1 fetch
+╌╌╌╌╌╌╌╌╌╌╌
+
+  fetch will fetch all the latest feeds.
+
+
+1.2.2 timeline
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+  timeline will print your timeline from all the feeds. You can also
+  pass an optional argument to load a single feed. For example, `pyxis
+  timeline user' will load the feed `user'.
