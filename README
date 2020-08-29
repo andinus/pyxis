@@ -21,5 +21,36 @@ hackers.
   features will be added if I use it.
 
   The feeds are saved in `$XDG_DATA_HOME/pyxis', if it's not defined
-  then `$HOME/.local/share/pyxis' is used. Feeds are stored in
-  `pyxis.pl', config file will be used later.
+  then `$HOME/.local/share/pyxis' is used. Feeds are configured in
+  `$XDG_CONFIG_HOME/pyxis.pl' or `$HOME/.config/pyxis.pl'.
+
+
+1.1 Configuration
+─────────────────
+
+  There is an example config file under `share/config.pl', move it
+  config directory & rename it to `pyxis.pl'.
+
+  *Warning*: Pyxis will evaluate the configuration file, which means an
+  attacker can use it to run malicious code.
+
+  *Note*: They could always add malicious code to `.profile' & do harm.
+  Just thought I should put the warning.
+
+  ┌────
+  │ #!/usr/bin/perl
+  │
+  │ use strict;
+  │ use warnings;
+  │
+  │ my %feeds = (
+  │     example => "https://example.com/twtxt.txt",
+  │ );
+  │
+  │ sub get_feeds { return %feeds; }
+  │
+  │ 1;
+  └────
+
+  Add your feeds to `%feeds' hash like shown above. You can remove those
+  2 `use' lines but it's good if you keep them.
