@@ -54,7 +54,8 @@ hackers.
 
   For example, `pyxis timeline user' will load the feed `user'. You can
   pass multiple feeds like `pyxis timeline f1 f2', it'll load both `f1'
-  & `f2'.
+  & `f2'. If you pass an invalid feed then it prints a warning & goes to
+  the next one.
 
 
 1.2 Configuration
