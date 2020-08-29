@@ -6,6 +6,7 @@ use feature 'say';
 
 use Path::Tiny;
 use Getopt::Long;
+use Term::ANSIColor qw/:pushpop/;
 
 my %options;
 GetOptions(
@@ -59,7 +60,40 @@ my %dispatch = (
             my $res = $http->mirror($url, $file);
             $res->{success}
                 ? do {say "$feed updated" if $options{verbose}}
-                : warn "failed to fetch $feed - $url\n"
+                : warn "failed to fetch $feed - $url\n$!\n"
+        }
+    },
+    timeline => sub {
+        my %twtxt;
+        for my $feed (path($feeds_dir)->children) {
+            for my $line ($feed->lines) {
+                chomp $line;
+                next if (substr($line, 0, 1) eq "#"
+                             or length $line == 0);
+                my @tmp = split /\t/, $line;
+
+                # Get $date & $entry from @tmp. This can over-write
+                # entries if they were posted at same time, very
+                # unlikely but possible.
+                my $date = shift @tmp;
+                my $entry = join '', @tmp;
+                $twtxt{$date} = $entry;
+            }
+        }
+        require Time::Moment;
+
+        my %epoch_twtxt;
+        foreach my $date (sort keys %twtxt) {
+            my $tm = Time::Moment->from_string($date);
+            my $epoch = $tm->epoch;
+            $epoch_twtxt{$epoch} = $twtxt{$date};
+        }
+
+        foreach my $epoch (reverse sort keys %epoch_twtxt) {
+            my $tm = Time::Moment->from_epoch($epoch);
+            my $date = LOCALCOLOR MAGENTA $tm->strftime(q{%b %d });
+            $date .= LOCALCOLOR GREEN $tm->strftime(q{%H:%M});
+            say "$date $epoch_twtxt{$epoch}";
         }
     },
 );
