@@ -20,6 +20,9 @@ if ($options{help}) {
 Commands:
     fetch
         Fetch latest feeds.
+    timeline
+        Show timeline.
+            Use `timeline <feed_1> <feed_2>' to show custom feeds.
 
 Options:
     --verbose
