@@ -5,7 +5,6 @@ use warnings;
 use feature 'say';
 
 use Path::Tiny;
-use HTTP::Simple;
 use Getopt::Long;
 
 my %options;
