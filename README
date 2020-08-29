@@ -1,0 +1,25 @@
+                               ━━━━━━━━━
+                                 PYXIS
+
+                                Andinus
+                               ━━━━━━━━━
+
+
+Pyxis is a simple twtxt client.
+
+[twtxt] is a decentralised, minimalist microblogging service for
+hackers.
+
+
+[twtxt] https://github.com/buckket/twtxt
+
+
+1 Documentation
+═══════════════
+
+  Pyxis can only follow feeds currently. I'm writing this for fun, more
+  features will be added if I use it.
+
+  The feeds are saved in `$XDG_DATA_HOME/pyxis', if it's not defined
+  then `$HOME/.local/share/pyxis' is used. Feeds are stored in
+  `pyxis.pl', config file will be used later.
