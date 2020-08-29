@@ -79,7 +79,11 @@ my %dispatch = (
             : push @feeds, path($feeds_dir)->children;
 
         foreach my $feed (@feeds) {
-            die "pyxis: no such feed\n" unless -e $feed;
+            # Skip if feed file doesn't exist.
+            say "pyxis: unknown feed `$feed'"
+                and next
+                unless -e $feed;
+
             for my $line ($feed->lines) {
                 chomp $line;
                 next if (substr($line, 0, 1) eq "#"
@@ -94,6 +98,10 @@ my %dispatch = (
                 $twtxt{$date} = $entry;
             }
         }
+        # Exit if there are no feeds to load.
+        die "pyxis: no feed to load\n"
+            unless scalar keys %twtxt > 0;
+
         require Time::Moment;
 
         my %epoch_twtxt;
