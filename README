@@ -9,8 +9,8 @@ Table of Contents
 ─────────────────
 
 1 Documentation
-.. 1.1 Configuration
-.. 1.2 Commands
+.. 1.1 Commands
+.. 1.2 Configuration
 
 
 Pyxis is a simple twtxt client.
@@ -37,7 +37,27 @@ hackers.
   `$XDG_CONFIG_HOME/pyxis.pl' or `$HOME/.config/pyxis.pl'.
 
 
-1.1 Configuration
+1.1 Commands
+────────────
+
+1.1.1 fetch
+╌╌╌╌╌╌╌╌╌╌╌
+
+  fetch will fetch all the latest feeds.
+
+
+1.1.2 timeline
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+  timeline will print your timeline from all the feeds. You can also
+  pass an optional argument to load a single feed.
+
+  For example, `pyxis timeline user' will load the feed `user'. You can
+  pass multiple feeds like `pyxis timeline f1 f2', it'll load both `f1'
+  & `f2'.
+
+
+1.2 Configuration
 ─────────────────
 
   There is an example config file under `share/config.pl', move it
@@ -66,20 +86,3 @@ hackers.
 
   Add your feeds to `%feeds' hash like shown above. You can remove those
   2 `use' lines but it's good if you keep them.
-
-
-1.2 Commands
-────────────
-
-1.2.1 fetch
-╌╌╌╌╌╌╌╌╌╌╌
-
-  fetch will fetch all the latest feeds.
-
-
-1.2.2 timeline
-╌╌╌╌╌╌╌╌╌╌╌╌╌╌
-
-  timeline will print your timeline from all the feeds. You can also
-  pass an optional argument to load a single feed. For example, `pyxis
-  timeline user' will load the feed `user'.
