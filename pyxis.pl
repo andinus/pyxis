@@ -65,7 +65,7 @@ my %dispatch = (
     },
     timeline => sub {
         my %twtxt;
-        for my $feed (path($feeds_dir)->children) {
+        foreach my $feed (path($feeds_dir)->children) {
             for my $line ($feed->lines) {
                 chomp $line;
                 next if (substr($line, 0, 1) eq "#"
