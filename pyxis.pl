@@ -75,7 +75,7 @@ my %dispatch = (
         # timeline f1 f2' & it'll load both `f1' & `f2'. But user can
         # also type `pyxis timeline f1 f1' & it'll load `f1' twice.
         scalar @ARGV
-            ? do {push @feeds, "$feeds_dir/$_" foreach @ARGV}
+            ? do {push @feeds, path("$feeds_dir/$_") foreach @ARGV}
             : push @feeds, path($feeds_dir)->children;
 
         foreach my $feed (@feeds) {
@@ -84,18 +84,22 @@ my %dispatch = (
                 and next
                 unless -e $feed;
 
+            # Get the feed name, $feed is the path, there is no easy
+            # way of keeping it as name so we split here to get feed
+            # name again.
+            my ($dummy_var, $feed_name) = split "$feeds_dir/", $feed;
+
             for my $line ($feed->lines) {
                 chomp $line;
                 next if (substr($line, 0, 1) eq "#"
                              or length $line == 0);
                 my @tmp = split /\t/, $line;
 
-                # Get $date & $entry from @tmp. This can over-write
-                # entries if they were posted at same time, very
-                # unlikely but possible.
                 my $date = shift @tmp;
-                my $entry = join '', @tmp;
-                $twtxt{$date} = $entry;
+                my $message = join '', @tmp;
+
+                # Include feed name in hash.
+                push @{$twtxt{$date}}, [$feed_name, $message];
             }
         }
         # Exit if there are no feeds to load.
@@ -112,10 +116,13 @@ my %dispatch = (
         }
 
         foreach my $epoch (reverse sort keys %epoch_twtxt) {
-            my $tm = Time::Moment->from_epoch($epoch);
-            my $date = LOCALCOLOR MAGENTA $tm->strftime(q{%b %d });
-            $date .= LOCALCOLOR GREEN $tm->strftime(q{%H:%M});
-            say "$date $epoch_twtxt{$epoch}";
+            foreach my $entry (@{$epoch_twtxt{$epoch}}) {
+                my $tm = Time::Moment->from_epoch($epoch);
+                my $date = LOCALCOLOR MAGENTA $tm->strftime(q{%b %d });
+                $date .= LOCALCOLOR GREEN $tm->strftime(q{%H:%M});
+                my $feed_name = LOCALCOLOR CYAN $entry->[0];
+                say "$date $feed_name $entry->[1]";
+            }
         }
     },
 );
